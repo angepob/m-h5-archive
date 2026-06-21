@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乐鱼体育 · 运动场景信息卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #faf8f5;
+            font-family: 'Georgia', 'Times New Roman', '宋体', 'Serif';
+            color: #2e2b27;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero 卡片主视觉 */
+        .hero-card {
+            background: #ffffff;
+            border-left: 8px solid #a5937e;
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 6px 28px rgba(0,0,0,0.04);
+            transition: box-shadow 0.25s;
+        }
+
+        .hero-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.07);
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #3a322c;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: #5f554b;
+            max-width: 85%;
+            border-bottom: 1px dashed #d6cdc0;
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-text {
+            font-size: 1.05rem;
+            color: #3f3a35;
+            margin-top: 0.8rem;
+        }
+
+        .hero-text a {
+            color: #7b6b58;
+            text-decoration: none;
+            border-bottom: 1px dotted #7b6b58;
+            font-weight: 500;
+        }
+
+        .hero-text a:hover {
+            color: #4d4036;
+            border-bottom: 1px solid #4d4036;
+        }
+
+        /* 三列信息卡片区 (用途·人群+自然段落) */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card-item {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2rem 1.8rem;
+            flex: 1 1 280px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+            border: 1px solid #ece6de;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+        }
+
+        .card-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.04);
+        }
+
+        .card-icon {
+            display: inline-block;
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            opacity: 0.8;
+        }
+
+        .card-label {
+            font-size: 1.4rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #3d352e;
+            border-left: 4px solid #b8a68f;
+            padding-left: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-body {
+            font-size: 0.98rem;
+            color: #4b443b;
+        }
+
+        .card-body ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 0.8rem;
+        }
+
+        .card-body li {
+            padding: 0.4rem 0;
+            padding-left: 1.4rem;
+            position: relative;
+        }
+
+        .card-body li::before {
+            content: "·";
+            color: #a5937e;
+            font-weight: bold;
+            font-size: 1.4rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        /* 引用块 / 提示框 */
+        .insight-box {
+            background: #f4efe9;
+            border-radius: 30px;
+            padding: 2rem 2.5rem;
+            margin: 2.5rem 0 3rem 0;
+            border: 1px solid #e5dbcf;
+            position: relative;
+        }
+
+        .insight-box::before {
+            content: "❝";
+            font-size: 3.2rem;
+            color: #c6b5a2;
+            position: absolute;
+            left: 1.6rem;
+            top: -0.2rem;
+            line-height: 1;
+            opacity: 0.6;
+        }
+
+        .insight-content {
+            padding-left: 2rem;
+            font-style: italic;
+            color: #3b342e;
+            font-size: 1.05rem;
+        }
+
+        .insight-content strong {
+            font-style: normal;
+            color: #5f4d3b;
+        }
+
+        .insight-content a {
+            color: #7b6b58;
+            text-decoration: none;
+            border-bottom: 1px dotted #a5937e;
+        }
+
+        .insight-content a:hover {
+            border-bottom: 1px solid #3d352e;
+        }
+
+        /* FAQ 摘要 — 极简问答卡片 */
+        .faq-mini {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2.8rem 0 2rem;
+        }
+
+        .faq-block {
+            background: #ffffff;
+            flex: 1 1 200px;
+            padding: 1.5rem 1.8rem;
+            border-radius: 60px 20px 20px 20px;
+            border: 1px solid #eae1d6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .faq-q {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #4f4339;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px dashed #ddd3c5;
+            padding-bottom: 0.3rem;
+        }
+
+        .faq-a {
+            font-size: 0.94rem;
+            color: #5a5147;
+        }
+
+        .faq-a a {
+            color: #7b6b58;
+            text-decoration: none;
+            border-bottom: 1px dotted #b8a68f;
+        }
+
+        .faq-a a:hover {
+            color: #3d352e;
+        }
+
+        /* 页脚自然链接段落 */
+        .footer-note {
+            border-top: 2px solid #e7dfd4;
+            padding-top: 2rem;
+            margin-top: 2.5rem;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #4f4840;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .footer-note p {
+            max-width: 600px;
+        }
+
+        .footer-note a {
+            color: #6b5d4d;
+            text-decoration: none;
+            border-bottom: 1px dotted #b8a68f;
+        }
+
+        .footer-note a:hover {
+            border-bottom: 1px solid #3d352e;
+        }
+
+        .footer-meta {
+            color: #7c7267;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 1.2rem 0.8rem;
+            }
+
+            .hero-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-sub {
+                max-width: 100%;
+                font-size: 1rem;
+            }
+
+            .card-item {
+                flex: 1 1 100%;
+            }
+
+            .insight-box {
+                padding: 1.8rem 1.5rem;
+            }
+
+            .insight-content {
+                padding-left: 1.2rem;
+                font-size: 0.98rem;
+            }
+
+            .faq-block {
+                flex: 1 1 100%;
+            }
+
+            .footer-note {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .card-label {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- 主视觉 hero 卡片 -->
+    <div class="hero-card">
+        <h1 class="hero-title">节奏 · 视野 · 乐鱼体育</h1>
+        <div class="hero-sub">运动从来不只胜负，还有投入其中的呼吸与判断。</div>
+        <div class="hero-text">
+            信息时代，体育内容有了更安静的呈现方式。<a href="https://m-h5-leyu.com.cn">乐鱼体育</a> 希望为喜欢运动、关注赛事的人提供一处可以停留、翻阅的角落，不喧哗，只把真实的运动细节与数据梳理成可读的片段。
+        </div>
+    </div>
+
+    <!-- 用途卡片 + 适合人群卡片 + 自然链接段落卡片 (三列) -->
+    <div class="card-grid">
+        <div class="card-item">
+            <div class="card-icon">🏃</div>
+            <div class="card-label">用途卡片</div>
+            <div class="card-body">
+                快速了解赛事背景、球队近况、战术简析；适合赛前浏览做功课，赛后复盘看脉络。也收录运动科普与训练小贴士。
+                <ul>
+                    <li>赛事速览与数据简表</li>
+                    <li>运动知识 · 规则解读</li>
+                    <li>日常训练思路参考</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">👥</div>
+            <div class="card-label">适合人群</div>
+            <div class="card-body">
+                无论是刚刚开始关注体育的新人，还是多年看球的老球迷，只要对运动背后的逻辑感兴趣，都能在这里找到平实的叙述。
+                <ul>
+                    <li>体育内容爱好者</li>
+                    <li>教练、业余运动员</li>
+                    <li>喜欢安静阅读的赛事观众</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">🔗</div>
+            <div class="card-label">自然链接段落</div>
+            <div class="card-body">
+                体育不止竞技，更连接生活。在<a href="https://m-h5-leyu.com.cn">乐鱼体育</a>，内容围绕赛事、训练与运动文化展开，没有浮夸的标题，只有经过梳理的资讯与观察。适合放在书签栏，偶尔点开读一段。
+            </div>
+        </div>
+    </div>
+
+    <!-- 引用块 / 提示框  (温和语气) -->
+    <div class="insight-box">
+        <div class="insight-content">
+            <p><strong>提示：</strong> 运动信息最好的状态是随手可查、读来轻松。这里不制造焦虑，也不鼓吹必胜心态，只是安静地把比赛、训练、营养等话题整理成卡片式的内容。如果你也喜欢有据可查的体育阅读，不妨把 <a href="https://m-h5-leyu.com.cn">乐鱼体育</a> 当作一处小小的参考角落。</p>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要 (三个极简问答) -->
+    <div class="faq-mini">
+        <div class="faq-block">
+            <div class="faq-q">❓ 内容更新频率？</div>
+            <div class="faq-a">根据赛季与热点不定期更新，注重质量而非数量，每篇都经过梳理。</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">❓ 是否有深度战术分析？</div>
+            <div class="faq-a">有的。会定期推出战术板与数据简析，适合想了解门道的读者。也欢迎通过 <a href="https://m-h5-leyu.com.cn">乐鱼体育</a> 页面内的方式交流。</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">❓ 适合运动新手吗？</div>
+            <div class="faq-a">非常适合。术语会附带简单解释，卡片式排版降低阅读门槛，慢慢看就能建立自己的运动知识库。</div>
+        </div>
+    </div>
+
+    <!-- 页脚自然链接段落 + 版权/日期 -->
+    <div class="footer-note">
+        <p>体育是持续的观察与理解。若你希望从另一个视角阅读赛事与运动生活，可以常来 <a href="https://m-h5-leyu.com.cn">乐鱼体育</a> 看看。这里的内容偏向静态阅读，适合泡杯茶慢慢翻。</p>
+        <span class="footer-meta">信息卡片设计 · 温和叙述</span>
+    </div>
+
+</div>
+</body>
+</html>
